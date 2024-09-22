@@ -1,2 +1,11 @@
-# DMFastSys
-Sistema de controle de acesso para gerenciar entradas e saídas de pessoas, empresas, veículos e embarcações. Focado em segurança e eficiência, utiliza banco de dados para registrar e consultar acessos em tempo real, com resiliência a quedas de energia e monitoramento completo.
+<h1>Sistema de Controle de Acesso - DiasMuleroSys</h1>
+DiasMuleroSys é um sistema de controle de entrada e saída projetado para aumentar a segurança e eficiência em instalações militares, portos e ambientes controlados. Desenvolvido por Dias e Mulero, o sistema gerencia acessos de pessoas, empresas, viaturas, embarcações e veículos, agilizando o processo de identificação e autorização.
+
+<h3>Funcionalidades</h3>
+Controle de Acesso: Registra e gerencia entradas e saídas de maneira rápida e segura.
+Banco de Dados Integrado: Armazena detalhes de quem acessou o local, permitindo consultas rápidas e precisas.
+Resiliência a Quedas de Energia: Todos os dados são registrados com segurança, sem risco de perda em caso de falha elétrica.
+Segurança Aprimorada: Utiliza todas as funcionalidades do banco de dados para monitoramento e auditoria detalhada dos acessos.
+
+<h3>Objetivo</h3>
+O sistema visa otimizar o processo de identificação, oferecendo maior controle e segurança, com foco na utilização eficiente de bases de dados e no aprimoramento da segurança operacional.
