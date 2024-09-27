@@ -1,5 +1,5 @@
-<h1>Sistema de Controle de Acesso - DiasMuleroSys</h1>
-DiasMuleroSys é um sistema de controle de entrada e saída projetado para aumentar a segurança e eficiência em instalações militares, portos e ambientes controlados. Desenvolvido por Dias e Mulero, o sistema gerencia acessos de pessoas, empresas, viaturas, embarcações e veículos, agilizando o processo de identificação e autorização.
+<h1>Sistema de Controle de Acesso - DiasSys</h1>
+DiasMuleroSys é um sistema de controle de entrada e saída projetado para aumentar a segurança e eficiência em instalações militares, portos e ambientes controlados. Desenvolvido por Dias a fim de melhorar a eficiência no serviço de contramestre, o sistema gerencia acessos de pessoas, empresas, viaturas, embarcações e veículos, agilizando o processo de identificação e autorização.
 
 <h3>Funcionalidades</h3>
 <ul>
