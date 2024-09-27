@@ -1,3 +1,38 @@
+<?php
+require '../ConexaoBanco/conexao.php';
+
+// Processa o envio do formulário
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['motivo']) && isset($_FILES['arquivo'])) {
+        $motivo = $_POST['motivo'];
+        
+        // Verifica se houve erro no upload
+        if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
+            $imagem = file_get_contents($_FILES['arquivo']['tmp_name']); // Lê a imagem ou arquivo enviado
+
+            try {
+                $sql = "INSERT INTO Acessos (motivo, imagem) VALUES (:motivo, :imagem)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':motivo', $motivo);
+                $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+
+                if ($stmt->execute()) {
+                    echo "<script>alert('Dados inseridos com sucesso!');</script>";
+                } else {
+                    echo "<script>alert('Erro ao inserir os dados.');</script>";
+                }
+            } catch (PDOException $e) {
+                echo "<script>alert('Erro: " . $e->getMessage() . "');</script>";
+            }
+        } else {
+            echo "<script>alert('Erro no upload do arquivo.');</script>";
+        }
+    } else {
+        echo "<script>alert('Motivo ou arquivo não enviado corretamente.');</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,7 +40,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de Arquivo com Webcam</title>
     <style>
-          body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -15,7 +50,6 @@
             align-items: center;
             background-color: #f0f0f0;
         }
-
         .container {
             background-color: #fff;
             padding: 20px;
@@ -24,19 +58,16 @@
             text-align: center;
             width: 300px;
         }
-
         h2 {
             margin-bottom: 20px;
             color: #333;
         }
-
         label {
             display: block;
             margin: 10px 0 5px;
             font-size: 14px;
             color: #333;
         }
-
         select, input[type="file"] {
             width: 100%;
             padding: 8px;
@@ -44,7 +75,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
         #webcam-container {
             margin: 15px 0;
             width: 100%;
@@ -55,17 +85,14 @@
             justify-content: center;
             align-items: center;
         }
-
         video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         #canvas {
             display: none;
         }
-
         #captured-photo {
             display: none;
             margin-top: 20px;
@@ -73,7 +100,6 @@
             border: 2px solid #ccc;
             border-radius: 5px;
         }
-
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -82,11 +108,9 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         #capture-btn {
             margin-bottom: 15px;
         }
@@ -161,29 +185,6 @@
             });
         });
     </script>
-
-    <?php
-    // Processa o envio do formulário
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Verifica se o arquivo foi enviado
-        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            $motivo = $_POST['motivo'];
-            $arquivo = $_FILES['arquivo'];
-
-            // Caminho onde o arquivo será salvo
-            $destino = 'uploads/' . basename($arquivo['name']);
-
-            // Mover o arquivo para o diretório de destino
-            if (move_uploaded_file($arquivo['tmp_name'], $destino)) {
-                echo "Arquivo enviado com sucesso! Motivo: $motivo";
-            } else {
-                echo "Erro ao enviar o arquivo.";
-            }
-        } else {
-            echo "Nenhum arquivo foi enviado ou ocorreu um erro.";
-        }
-    }
-    ?>
 
 </body>
 </html>
