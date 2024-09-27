@@ -39,83 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de Arquivo com Webcam</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-size: 14px;
-            color: #333;
-        }
-        select, input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #webcam-container {
-            margin: 15px 0;
-            width: 100%;
-            height: 200px;
-            background-color: #000;
-            border: 2px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        #canvas {
-            display: none;
-        }
-        #captured-photo {
-            display: none;
-            margin-top: 20px;
-            width: 100%;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #capture-btn {
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
+<link rel="stylesheet" href="style.css"></head>
 <body>
 
     <div class="container">
@@ -125,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <select id="motivo" name="motivo">
                 <option value="saude">Saúde</option>
                 <option value="veteranos">Veteranos</option>
+                <option value="reuniao">Reunião</option>
+                <option value="acompanhar">Acompanhar</option>
+                <option value="empresa">Empresa</option>
+                <option value="outros">Outros</option>
             </select>
 
             <label>Visualização da Webcam:</label>
@@ -140,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="file" id="arquivo" name="arquivo" accept="image/*, .pdf, .doc, .docx">
 
             <button type="submit">Enviar</button>
+            <a href="view.php" style="text-decoration: none;">
+                <button type="button" style="background-color: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Ver Registros</button>
+            </a>
         </form>
 
         <img id="captured-photo" alt="Foto capturada" />
