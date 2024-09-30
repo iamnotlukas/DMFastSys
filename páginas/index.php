@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <div class="container">
+        <img src="../imagens/logoMarinha.png">
         <h2>Enviar Arquivo</h2>
         <form id="form" enctype="multipart/form-data" method="POST" action="">
             <label for="motivo">Selecione o Motivo:</label>
