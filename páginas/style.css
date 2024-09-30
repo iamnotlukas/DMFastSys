@@ -14,7 +14,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 90%; /* Ajuste a largura conforme necessário */
+    max-width: 1200px;
 }
 h2 {
     margin-bottom: 20px;
@@ -32,6 +33,46 @@ select, input[type="file"] {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#capture-btn {
+    margin-bottom: 15px;
+}
+
+/* Estilos para layout horizontal */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+}
+.left, .right {
+    width: 45%; /* Largura igual para as divs esquerda e direita */
+}
+.center {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+form {
+    display: flex;
+    flex-direction: column;
 }
 #webcam-container {
     margin: 15px 0;
@@ -57,18 +98,4 @@ video {
     width: 100%;
     border: 2px solid #ccc;
     border-radius: 5px;
-}
-button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-#capture-btn {
-    margin-bottom: 15px;
 }
