@@ -5,16 +5,18 @@ require '../ConexaoBanco/conexao.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['motivo']) && isset($_FILES['arquivo'])) {
         $motivo = $_POST['motivo'];
-        
+        $observacoes = isset($_POST['observacoes']) ? $_POST['observacoes'] : null; // Captura as observações
+
         // Verifica se houve erro no upload
         if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $imagem = file_get_contents($_FILES['arquivo']['tmp_name']); // Lê a imagem ou arquivo enviado
 
             try {
-                $sql = "INSERT INTO Acessos (motivo, imagem) VALUES (:motivo, :imagem)";
+                $sql = "INSERT INTO Acessos (motivo, imagem, observacoes) VALUES (:motivo, :imagem, :observacoes)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':motivo', $motivo);
                 $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+                $stmt->bindParam(':observacoes', $observacoes); // Vincula as observações
 
                 if ($stmt->execute()) {
                     echo "<script>alert('Dados inseridos com sucesso!');</script>";
@@ -39,7 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de Arquivo com Webcam</title>
-<link rel="stylesheet" href="style.css"></head>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
     <div class="container">
@@ -66,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <label for="arquivo">Escolha um Arquivo:</label>
             <input type="file" id="arquivo" name="arquivo" accept="image/*, .pdf, .doc, .docx">
+
+            <label for="observacoes">Observações (máx. 20 caracteres):</label>
+            <input type="text" id="observacoes" name="observacoes" maxlength="20"> <!-- Campo de observações -->
 
             <button type="submit">Enviar</button>
             <a href="view.php" style="text-decoration: none;">

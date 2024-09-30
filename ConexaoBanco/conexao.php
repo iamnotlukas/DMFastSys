@@ -1,7 +1,7 @@
 <?php
 // Configurações do banco de dados
 $host = 'localhost';    // Host do banco de dados (geralmente localhost)
-$dbname = 'dmfastsys';   // Nome do banco de dados
+$dbname = 'diasfastsys';   // Nome do banco de dados
 $user = 'root';          // Nome de usuário do MySQL
 $pass = '';              // Senha do MySQL
 
