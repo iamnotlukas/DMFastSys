@@ -22,85 +22,6 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="viewstyle.css">
     <title>Visualizar Dados</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        h2 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-        img {
-            cursor: pointer;
-        }
-        button.delete-btn {
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        
-        /* Estilos do modal */
-        .modal {
-            display: none; /* Oculta o modal por padrão */
-            position: fixed; /* Fixa o modal na tela */
-            z-index: 1000; /* Fica acima de outros conteúdos */
-            left: 0;
-            top: 0;
-            width: 100%; /* Largura total */
-            height: 100%; /* Altura total */
-            overflow: auto; /* Habilita scroll se necessário */
-            background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro com transparência */
-        }
-        
-        .modal-content {
-            margin: 15% auto; /* Centraliza verticalmente e horizontalmente */
-            padding: 20px;
-            width: 80%; /* Largura do conteúdo do modal */
-            max-width: 700px; /* Largura máxima */
-            background-color: white; /* Fundo branco */
-            border-radius: 5px; /* Bordas arredondadas */
-            text-align: center; /* Centraliza o texto */
-        }
-        
-        .modal-content img {
-            width: 100%; /* Imagem ocupa 100% da largura do conteúdo */
-            border-radius: 5px; /* Bordas arredondadas da imagem */
-        }
-
-        .close {
-            color: #aaa; /* Cor do botão de fechar */
-            float: right; /* Posiciona à direita */
-            font-size: 28px; /* Tamanho da fonte */
-            font-weight: bold; /* Negrito */
-            cursor: pointer; /* Muda o cursor */
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black; /* Muda a cor ao passar o mouse */
-            text-decoration: none; /* Remove o sublinhado */
-            cursor: pointer; /* Muda o cursor */
-        }
-    </style>
 </head>
 <body>
 
@@ -129,7 +50,7 @@ try {
                         <td><?php echo htmlspecialchars($resultado['id']); ?></td>
                         <td><?php echo htmlspecialchars($resultado['motivo']); ?></td>
                         <td>
-                            <img src="data:image/png;base64,<?php echo base64_encode($resultado['imagem']); ?>" alt="Imagem" width="100" onclick="openModal(this)" />
+                            <img src="data:image/png;base64,<?php echo base64_encode($resultado['imagem']); ?>" alt="Imagem" onclick="showLargeImage(this, <?php echo htmlspecialchars(json_encode($resultado['imagem'])); ?>)" />
                         </td>
                         <td><?php echo htmlspecialchars($resultado['data_hora']); ?></td>
                         <td><?php echo htmlspecialchars($resultado['observacoes']); ?></td>
@@ -149,38 +70,6 @@ try {
             <?php endif; ?>
         </tbody>
     </table>
-
-    <!-- Modal para exibir a imagem em tamanho grande -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" src="" alt="Imagem em tamanho grande">
-        </div>
-    </div>
-
-    <script>
-        // Função para abrir o modal e exibir a imagem
-        function openModal(imgElement) {
-            var modal = document.getElementById('imageModal');
-            var modalImg = document.getElementById('modalImage');
-            modal.style.display = 'block'; // Muda a exibição para block
-            modalImg.src = imgElement.src; // Usa o mesmo src da imagem clicada
-        }
-
-        // Função para fechar o modal
-        function closeModal() {
-            var modal = document.getElementById('imageModal');
-            modal.style.display = 'none'; // Oculta o modal
-        }
-
-        // Fecha o modal se o usuário clicar fora do conteúdo
-        window.onclick = function(event) {
-            var modal = document.getElementById('imageModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
 
 </body>
 </html>
