@@ -58,11 +58,11 @@ try {
                         <td>
                             <form method="POST" action="excluir.php">
                                 <input type="hidden" name="delete_id" value="<?php echo $resultado['id']; ?>" />
-                                <button type="submit" class="delete-btn">Remover</button>
+                                <button type="submit" style="background-color: #FF0000; color: white; border: none; padding: 5px 10px; border-radius: 5px;" class="delete-btn">Remover</button>
                             </form>
                             <form action="darBaixa.php" method="POST" style="display: inline;">
                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($resultado['id']); ?>">
-                                <button type="submit" style="background-color: #00ffff; color: white; border: none; padding: 5px 10px; border-radius: 5px;">Dar Baixa</button>
+                                <button type="submit" style="background-color: green; color: white; border: none; padding: 5px 10px; border-radius: 5px;">Dar Baixa</button>
                             </form>
                         </td>
                     </tr>
