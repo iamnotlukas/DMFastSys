@@ -1,5 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
+font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -14,8 +17,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 90%; /* Ajuste a largura conforme necessário */
-    max-width: 1200px;
+    margin: 15% auto;
 }
 h2 {
     margin-bottom: 20px;
@@ -61,11 +63,32 @@ button:hover {
     width: 45%; /* Largura igual para as divs esquerda e direita */
 }
 .center {
-    width: 10%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Espaço entre a imagem/logo e as colunas */
+}
+
+.left-column, .right-column {
+    flex: 1; /* Cada coluna ocupa metade do espaço */
+    margin: 0 10px; /* Espaçamento entre as colunas */
+}
+
+#captured-photo {
+    display: none; /* A imagem capturada deve estar inicialmente oculta */
+    margin-top: 20px;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+
 img {
     max-width: 100%;
     height: auto;
@@ -74,6 +97,7 @@ form {
     display: flex;
     flex-direction: column;
 }
+
 #webcam-container {
     margin: 15px 0;
     width: 100%;
@@ -99,3 +123,5 @@ video {
     border: 2px solid #ccc;
     border-radius: 5px;
 }
+
+
