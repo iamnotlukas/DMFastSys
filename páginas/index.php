@@ -42,46 +42,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de Arquivo com Webcam</title>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
-    <div class="container">
-        <img src="../imagens/logoMarinha.png">
-        <h2>Enviar Arquivo</h2>
-        <form id="form" enctype="multipart/form-data" method="POST" action="">
-            <label for="motivo">Selecione o Motivo:</label>
-            <select id="motivo" name="motivo">
-                <option value="saude">Saúde</option>
-                <option value="veteranos">Veteranos</option>
-                <option value="reuniao">Reunião</option>
-                <option value="acompanhar">Acompanhar</option>
-                <option value="empresa">Empresa</option>
-                <option value="outros">Outros</option>
-            </select>
-
+<div class="container">
+    <img src="../imagens/logoMarinha.png" style="width: 13%; margin-bottom: 20px;">
+    <h2>Enviar Arquivo</h2>
+    <div class="content">
+        <div class="left-column">
             <label>Visualização da Webcam:</label>
             <div id="webcam-container">
                 <video id="webcam" autoplay></video>
             </div>
-
             <button type="button" id="capture-btn">Capturar Foto</button>
-
             <canvas id="canvas" width="300" height="200"></canvas>
+            <img id="captured-photo" alt="Foto capturada" />
+        </div>
 
-            <label for="arquivo">Escolha um Arquivo:</label>
-            <input type="file" id="arquivo" name="arquivo" accept="image/*, .pdf, .doc, .docx">
+        <div class="right-column">
+            <form id="form" enctype="multipart/form-data" method="POST" action="">
+                <label for="motivo">Selecione o Motivo:</label>
+                <select id="motivo" name="motivo">
+                    <option value="saude">Saúde</option>
+                    <option value="veteranos">Veteranos</option>
+                    <option value="reuniao">Reunião</option>
+                    <option value="acompanhar">Acompanhar</option>
+                    <option value="empresa">Empresa</option>
+                    <option value="outros">Outros</option>
+                </select>
 
-            <label for="observacoes">Observações (máx. 20 caracteres):</label>
-            <input type="text" id="observacoes" name="observacoes" maxlength="20"> <!-- Campo de observações -->
+                <label for="arquivo">Escolha um Arquivo:</label>
+                <input type="file" id="arquivo" name="arquivo" accept="image/*, .pdf, .doc, .docx">
 
-            <button type="submit">Enviar</button>
-            <a href="view.php" style="text-decoration: none;">
-                <button type="button" style="background-color: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Ver Registros</button>
-            </a>
-        </form>
+                <label for="observacoes">Observações (máx. 20 caracteres):</label>
+                <input type="text" id="observacoes" name="observacoes" maxlength="20"> <!-- Campo de observações -->
 
-        <img id="captured-photo" alt="Foto capturada" />
+                <div class="botoes" style="margin: 5% auto;">
+                    <button type="submit">Enviar</button>
+                    <a href="view.php" style="text-decoration: none;">
+                        <button type="button" style="background-color: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Ver Registros</button>
+                    </a>
+                </div>
+            </form>
+
+        </div>
     </div>
+    <h5>Desenvolvido por MN-RC DIAS 24.0729.23</h5>
+</div>
 
     <script>
         const video = document.getElementById('webcam');
