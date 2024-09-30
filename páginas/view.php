@@ -1,4 +1,13 @@
 <?php
+
+session_start();  // Inicia a sessão
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: login.php');  // Redireciona para a página de login
+    exit();
+}
+
 require '../ConexaoBanco/conexao.php';
 
 try {
@@ -70,6 +79,12 @@ try {
             <?php endif; ?>
         </tbody>
     </table>
+    <form method="POST" action="logout.php">
+        <button class="logout-btn" type="submit" style="
+    width: fit-content;
+    background: orange;
+    margin: 0 auto;">Logout</button>
+    </form>
 
 </body>
 </html>

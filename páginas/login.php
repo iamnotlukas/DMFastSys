@@ -1,11 +1,14 @@
 <?php
+session_start(); // Inicia a sessão
+
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $senha = $_POST['senha'];
 
     // Verifica se a senha está correta
     if ($senha === 'cpspnaac') {
-        header('Location: index.php');
+        $_SESSION['logado'] = true; // Define a sessão como logado
+        header('Location: index.php'); // Redireciona para a página index.php
         exit();
     } else {
         $erro = 'Senha incorreta. Tente novamente.';
@@ -70,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="login-container">
-    <img src="../imagens/logoMarinha.png" style="width: 20%; margin-bottom: 10px;">
+        <img src="../imagens/logoMarinha.png" style="width: 20%; margin-bottom: 10px;">
         <h2>Acesso Restrito</h2>
         <form method="POST">
             <label for="senha">Senha:</label>

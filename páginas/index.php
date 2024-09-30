@@ -1,4 +1,15 @@
 <?php
+
+session_start();  // Inicia a sessão
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: login.php');  // Redireciona para a página de login
+    exit();
+}
+
+
+
 require '../ConexaoBanco/conexao.php';
 
 // Processa o envio do formulário
@@ -51,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
 <div class="container">
-    <img src="../imagens/logoMarinha.png" style="width: 13%; margin-bottom: 20px;">
+    <img src="../imagens/logoMarinha.png" style="width: 13%;">
     <h2>Enviar Arquivo</h2>
     <div class="content">
         <div class="left-column">
@@ -92,6 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         </div>
     </div>
+    <form method="POST" action="logout.php">
+        <button class="logout-btn" type="submit" style="
+    width: fit-content;
+    background: orange;
+    margin: 0 auto;">Logout</button>
+    </form>
     <h5>Desenvolvido por MN-RC DIAS 24.0729.23</h5>
 </div>
 
