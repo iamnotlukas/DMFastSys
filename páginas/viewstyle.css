@@ -28,7 +28,11 @@ th {
 
 img {
   cursor: pointer;
+  width: auto; /* Removido o max-width para manter o tamanho original */
+  height: auto; /* Garante que a altura siga a proporção */
+  max-width: 100%; /* Impede que a imagem ultrapasse o tamanho da célula ou do layout */
 }
+
 
 .modal {
   display: flex;
