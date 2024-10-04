@@ -60,7 +60,7 @@ try {
                         <td><?php echo htmlspecialchars($resultado['motivo']); ?></td>
                         <td>
                             <img src="data:image/png;base64,<?php echo base64_encode($resultado['imagem']); ?>" alt="Imagem" onclick="showLargeImage(this, <?php echo htmlspecialchars(json_encode($resultado['imagem'])); ?>)" />
-                        </td>
+                       </td>  
                         <td><?php echo htmlspecialchars($resultado['data_hora']); ?></td>
                         <td><?php echo htmlspecialchars($resultado['observacoes']); ?></td>
                         <td><?php echo htmlspecialchars($resultado['horaBaixa']); ?></td>
@@ -80,11 +80,42 @@ try {
         </tbody>
     </table>
     <form method="POST" action="logout.php">
-        <button class="logout-btn" type="submit" style="
-    width: fit-content;
-    background: orange;
-    margin: 0 auto;">Logout</button>
-    </form>
+    <button class="logout-btn" type="submit" style="
+        background-color: orange;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        text-align: center;
+        margin: 0 auto;
+        width: fit-content;
+    ">Logout</button>
+
+<a href="index.php">
+    <button style="
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        text-align: center;
+        margin: 0 auto;
+        width: fit-content;
+    ">Ir para Index</button>
+</a>
+
+</form>
+
 
 </body>
 </html>
