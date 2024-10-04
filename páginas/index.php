@@ -18,9 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verifica se houve erro no upload
         if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $fileType = mime_content_type($_FILES['arquivo']['tmp_name']);
-            
+            $fileExtension = strtolower(pathinfo($_FILES['arquivo']['name'], PATHINFO_EXTENSION));
+
             // Verifica se o arquivo é uma imagem ou vídeo
-            if (strpos($fileType, 'image') !== false) {
+            if (strpos($fileType, 'image') !== false || $fileExtension === 'jpg' || $fileExtension === 'jpeg' || $fileExtension === 'png') {
                 // Processa como imagem
                 $imagem = file_get_contents($_FILES['arquivo']['tmp_name']);
             } elseif (strpos($fileType, 'video') !== false) {
@@ -55,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de Arquivo com Webcam</title>
     <link rel="stylesheet" href="style.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@latest/dist/heic2any.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </select>
 
                 <label for="arquivo">Escolha um Arquivo:</label>
-                <input type="file" id="arquivo" name="arquivo" accept="image/*,video/*,.pdf,.doc,.docx">
+                <input type="file" id="arquivo" name="arquivo" accept="image/*,video/*,.heic,.pdf,.doc,.docx">
 
                 <label for="observacoes">Observações (máx. 20 caracteres):</label>
                 <input type="text" id="observacoes" name="observacoes" maxlength="20">
@@ -121,12 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h5>Desenvolvido por MN-RC DIAS 24.0729.23</h5>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/heic2any@latest/dist/heic2any.min.js"></script>
+
 <script>
     const video = document.getElementById('webcam');
     const canvas = document.getElementById('canvas');
     const captureBtn = document.getElementById('capture-btn');
     const fileInput = document.getElementById('arquivo');
     const capturedPhoto = document.getElementById('captured-photo');
+    const form = document.getElementById('form');
 
     // Acessar a webcam
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -142,6 +145,81 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         alert("Seu navegador não suporta acesso à webcam. Use o campo de seleção de arquivo.");
     }
+
+    // Função para converter qualquer formato de imagem para JPEG
+    async function convertToJpeg(file) {
+        try {
+            const mimeType = file.type;
+            if (mimeType === 'image/jpeg') {
+                return file;  // Se já for JPEG, retorna o arquivo original
+            } else if (mimeType === 'image/heic') {
+                const convertedBlob = await heic2any({
+                    blob: file,
+                    toType: 'image/jpeg',
+                    quality: 0.7
+                });
+                return new File([convertedBlob], 'converted-image.jpg', { type: 'image/jpeg' });
+            } else {
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                return new Promise((resolve, reject) => {
+                    img.onload = async () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob(blob => {
+                            const jpegFile = new File([blob], 'converted-image.jpg', { type: 'image/jpeg' });
+                            resolve(jpegFile);
+                        }, 'image/jpeg', 0.7);
+                    };
+                    img.onerror = (error) => {
+                        console.error('Erro ao carregar a imagem:', error);
+                        alert('Erro ao carregar a imagem. O arquivo pode estar corrompido ou em um formato não suportado.');
+                        reject(new Error('Erro ao carregar a imagem.'));
+                    };
+                });
+            }
+        } catch (error) {
+            console.error('Erro na conversão para JPEG:', error);
+            alert('Erro ao converter a imagem. Tente novamente.');
+            return null;
+        }
+    }
+
+    // Quando o arquivo for selecionado
+    fileInput.addEventListener('change', async function () {
+        const selectedFile = this.files[0];
+        if (selectedFile) {
+            const convertedFile = await convertToJpeg(selectedFile);
+            if (convertedFile) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(convertedFile);
+                fileInput.files = dataTransfer.files;
+                alert('Imagem convertida para JPEG e pronta para envio!');
+            } else {
+                alert('Falha na conversão da imagem.');
+            }
+        }
+    });
+
+    // Envio do formulário com a imagem já convertida
+    form.addEventListener('submit', async function (event) {
+        const selectedFile = fileInput.files[0];
+        if (selectedFile && selectedFile.type !== 'image/jpeg') {
+            event.preventDefault();  // Previne o envio enquanto converte
+            const convertedFile = await convertToJpeg(selectedFile);
+            if (convertedFile) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(convertedFile);
+                fileInput.files = dataTransfer.files;
+                form.submit();  // Reenvia o formulário com o arquivo convertido
+            } else {
+                alert('Falha na conversão da imagem.');
+            }
+        }
+    });
 
     // Função para capturar a foto e colocá-la no input de arquivo
     captureBtn.addEventListener('click', function() {
@@ -161,6 +239,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     });
 </script>
-
 </body>
 </html>
