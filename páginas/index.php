@@ -1,5 +1,4 @@
 <?php
-
 session_start();  // Inicia a sessão
 
 // Verifica se o usuário está logado
@@ -8,26 +7,36 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     exit();
 }
 
-
-
 require '../ConexaoBanco/conexao.php';
 
 // Processa o envio do formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['motivo']) && isset($_FILES['arquivo'])) {
         $motivo = $_POST['motivo'];
-        $observacoes = isset($_POST['observacoes']) ? $_POST['observacoes'] : null; // Captura as observações
+        $observacoes = isset($_POST['observacoes']) ? $_POST['observacoes'] : null;
 
         // Verifica se houve erro no upload
         if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            $imagem = file_get_contents($_FILES['arquivo']['tmp_name']); // Lê a imagem ou arquivo enviado
+            $fileType = mime_content_type($_FILES['arquivo']['tmp_name']);
+            
+            // Verifica se o arquivo é uma imagem ou vídeo
+            if (strpos($fileType, 'image') !== false) {
+                // Processa como imagem
+                $imagem = file_get_contents($_FILES['arquivo']['tmp_name']);
+            } elseif (strpos($fileType, 'video') !== false) {
+                // Processa como vídeo
+                $imagem = file_get_contents($_FILES['arquivo']['tmp_name']);
+            } else {
+                echo "<script>alert('Tipo de arquivo não suportado. Apenas imagens e vídeos são permitidos.');</script>";
+                exit();
+            }
 
             try {
                 $sql = "INSERT INTO Acessos (motivo, imagem, observacoes) VALUES (:motivo, :imagem, :observacoes)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':motivo', $motivo);
                 $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
-                $stmt->bindParam(':observacoes', $observacoes); // Vincula as observações
+                $stmt->bindParam(':observacoes', $observacoes);
 
                 if ($stmt->execute()) {
                     echo "<script>alert('Dados inseridos com sucesso!');</script>";
@@ -46,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -55,9 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -88,10 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </select>
 
                 <label for="arquivo">Escolha um Arquivo:</label>
-                <input type="file" id="arquivo" name="arquivo" accept="image/*, .pdf, .doc, .docx">
+                <input type="file" id="arquivo" name="arquivo" accept="image/*,video/*,.pdf,.doc,.docx">
 
                 <label for="observacoes">Observações (máx. 20 caracteres):</label>
-                <input type="text" id="observacoes" name="observacoes" maxlength="20"> <!-- Campo de observações -->
+                <input type="text" id="observacoes" name="observacoes" maxlength="20">
 
                 <div class="botoes" style="margin: 5% auto;">
                     <button type="submit">Enviar</button>
@@ -100,58 +109,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </a>
                 </div>
             </form>
-
         </div>
     </div>
+
     <form method="POST" action="logout.php">
         <button class="logout-btn" type="submit" style="
-    width: fit-content;
-    background: orange;
-    margin: 0 auto;">Logout</button>
+            width: fit-content;
+            background: orange;
+            margin: 0 auto;">Logout</button>
     </form>
     <h5>Desenvolvido por MN-RC DIAS 24.0729.23</h5>
 </div>
 
-    <script>
-        const video = document.getElementById('webcam');
-        const canvas = document.getElementById('canvas');
-        const captureBtn = document.getElementById('capture-btn');
-        const fileInput = document.getElementById('arquivo');
-        const capturedPhoto = document.getElementById('captured-photo');
+<script>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('capture-btn');
+    const fileInput = document.getElementById('arquivo');
+    const capturedPhoto = document.getElementById('captured-photo');
 
-        // Acessar a webcam
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function(err) {
-                    console.error("Erro ao acessar a webcam: ", err);
-                    alert("Não foi possível acessar a webcam.");
-                });
-        } else {
-            alert("Seu navegador não suporta acesso à webcam.");
-        }
-
-        // Função para capturar a foto e colocá-la no input de arquivo
-        captureBtn.addEventListener('click', function() {
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            canvas.toBlob(function(blob) {
-                const file = new File([blob], 'webcam-photo.png', { type: 'image/png' });
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                fileInput.files = dataTransfer.files;
-
-                const imageUrl = URL.createObjectURL(blob);
-                capturedPhoto.src = imageUrl;
-                capturedPhoto.style.display = 'block';  // Exibe a imagem
-                alert('Foto capturada e inserida no campo de envio!');
+    // Acessar a webcam
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(err) {
+                console.error("Erro ao acessar a webcam: ", err);
+                alert("Não foi possível acessar a webcam. Você pode escolher um arquivo.");
             });
+    } else {
+        alert("Seu navegador não suporta acesso à webcam. Use o campo de seleção de arquivo.");
+    }
+
+    // Função para capturar a foto e colocá-la no input de arquivo
+    captureBtn.addEventListener('click', function() {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(function(blob) {
+            const file = new File([blob], 'webcam-photo.png', { type: 'image/png' });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+
+            const imageUrl = URL.createObjectURL(blob);
+            capturedPhoto.src = imageUrl;
+            capturedPhoto.style.display = 'block';
+            alert('Foto capturada e inserida no campo de envio!');
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
