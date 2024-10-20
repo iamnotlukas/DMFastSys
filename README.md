@@ -1,14 +1,14 @@
-<h1>Sistema de Controle de Acesso - DiasSys</h1>
-DiasFastSys é um sistema de controle de entrada e saída projetado para aumentar a segurança e eficiência em instalações militares, portos e ambientes controlados. Desenvolvido por Dias a fim de melhorar a eficiência no serviço de contramestre, o sistema gerencia acessos de pessoas, empresas, viaturas, embarcações e veículos, agilizando o processo de identificação e autorização.
+<h1>Sistema de Controle de Acesso - DiasFastSys</h1>
+
+<p><strong>DiasFastSys</strong> é um sistema de controle de acesso desenvolvido para aumentar a segurança e a eficiência em instalações militares, portos e ambientes controlados. Utilizando a foto do documento das pessoas para identificação, o sistema permite uma verificação em menos de 3 segundos, agilizando o processo de autorização de entrada e saída.</p>
 
 <h3>Funcionalidades</h3>
 <ul>
-  
-<li>Controle de Acesso: Registra e gerencia entradas e saídas de maneira rápida e segura.</li>
-<li>Banco de Dados Integrado: Armazena detalhes de quem acessou o local, permitindo consultas rápidas e precisas.</li>
-<li>Resiliência a Quedas de Energia: Todos os dados são registrados com segurança, sem risco de perda em caso de falha elétrica.</li>
-<li>Segurança Aprimorada: Utiliza todas as funcionalidades do banco de dados para monitoramento e auditoria detalhada dos acessos.</li>
+    <li><strong>Controle de Acesso:</strong> Gerencia entradas e saídas de forma rápida e segura.</li>
+    <li><strong>Banco de Dados Integrado:</strong> Armazena detalhes dos acessos, permitindo consultas rápidas.</li>
+    <li><strong>Resiliência a Quedas de Energia:</strong> Registros seguros, mesmo em caso de falhas elétricas.</li>
+    <li><strong>Segurança Aprimorada:</strong> Monitoramento e auditoria detalhada dos acessos.</li>
 </ul>
 
 <h3>Objetivo</h3>
-O sistema visa otimizar o processo de identificação, oferecendo maior controle e segurança, com foco na utilização eficiente de bases de dados e no aprimoramento da segurança operacional.
+O sistema visa otimizar a identificação, garantindo maior controle e segurança nas operações, com foco na eficiência do uso de dados e no aprimoramento da segurança operacional.
