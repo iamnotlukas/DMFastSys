@@ -1,6 +1,6 @@
-<h1>Sistema de Controle de Acesso - DiasFastSys</h1>
+<h1>Sistema de Controle de Acesso - SpeedID</h1>
 
-<p><strong>DiasFastSys</strong> é um sistema de controle de acesso desenvolvido para aumentar a segurança e a eficiência em instalações militares, portos e ambientes controlados. Utilizando a foto do documento das pessoas para identificação, o sistema permite uma verificação em menos de 3 segundos, agilizando o processo de autorização de entrada e saída.</p>
+<p><strong>SpeedID</strong> é um sistema de controle de acesso desenvolvido para aumentar a segurança e a eficiência em instalações militares, portos e ambientes controlados. Utilizando a foto do documento das pessoas para identificação, o sistema permite uma verificação em menos de 3 segundos, agilizando o processo de autorização de entrada e saída.</p>
 
 <h3>Funcionalidades</h3>
 <ul>
